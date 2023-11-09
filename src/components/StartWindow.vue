@@ -22,6 +22,13 @@ watch(
 
 const languageLabel = computed(() => (language.value === "rus" ? "Язык" : "Language"));
 const themeLabel = computed(() => (language.value === "rus" ? "Тема" : "Theme"));
+const randomButtonText = computed(() => (language.value === "rus" ? "Случайная тема" : "Random theme"));
+
+const setRandomTheme = () => {
+  const randomIndex = Math.floor(Math.random() * themesOptions.value.length);
+  selectedTheme.value = themesOptions.value[randomIndex];
+  emits('start', { language: language.value, theme: selectedTheme.value })
+}
 </script>
 
 <template>
@@ -43,6 +50,7 @@ const themeLabel = computed(() => (language.value === "rus" ? "Тема" : "Them
         <option v-for="theme in themesOptions" :value="theme">{{ theme }}</option>
       </select>
     </div>
+    <button @click="setRandomTheme">{{ randomButtonText }}</button>
     <button @click="emits('start', { language, theme: selectedTheme })">START</button>
   </div>
 </template>
@@ -74,7 +82,7 @@ const themeLabel = computed(() => (language.value === "rus" ? "Тема" : "Them
 }
 
 select {
-  padding: .7rem 0.5rem 0.6rem;
+  padding: 0.7rem 0.5rem 0.6rem;
   font-weight: 500;
   font-size: 18px;
   color: #232323 !important;

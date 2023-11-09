@@ -56,6 +56,7 @@ h1 {
 
 button,
 .box {
+  color: #232323 !important;
   border: 3px solid #232323;
   border-radius: 6px;
 }

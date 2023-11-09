@@ -77,6 +77,7 @@ select {
   padding: .7rem 0.5rem 0.6rem;
   font-weight: 500;
   font-size: 18px;
+  color: #232323 !important;
   background-color: var(--light);
 }
 

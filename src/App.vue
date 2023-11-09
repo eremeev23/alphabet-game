@@ -30,6 +30,7 @@ h1 {
   top: 120px;
   left: 50%;
   text-transform: uppercase;
+  white-space: nowrap;
   transform: translateX(-50%);
 }
 </style>

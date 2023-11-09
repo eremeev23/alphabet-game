@@ -127,6 +127,14 @@ button:hover {
   color: var(--light);
 }
 
+@media screen and (max-width: 640px) {
+  label:hover,
+  button:hover {
+    background-color: transparent;
+    color: #232323;
+  }
+}
+
 input:checked + label {
   text-decoration: line-through;
   color: #666 !important;

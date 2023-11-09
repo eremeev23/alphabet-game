@@ -1,0 +1,20 @@
+# Folders
+node_modules
+cache
+/assets/img
+
+# IDE
+.vscode
+.idea
+
+# Nuxt
+.output
+.nuxt
+
+# Logs
+*.log
+
+# Files
+.*
+package-lock.json
+yarn.lock

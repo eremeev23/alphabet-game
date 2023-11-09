@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --light: #fbf3e7;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  background-color: #232323;
+}
+
+.game {
+  height: calc(100% - 32px);
+  width: calc(100% - 32px);
+  background-color: var(--light);
+  border-radius: 16px;
+}
+
+@media screen and (max-width: 740px) {
+  body {
+    font-size: 12px;
+  }
+
+  .game {
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+  }
+}

@@ -6,7 +6,13 @@
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --light: #fbf3e7;
+  --black: #232323;
+  --light: #faf4ec;
+  --blue: #6495ed;
+}
+
+button {
+  cursor: pointer;
 }
 
 #app {
@@ -14,7 +20,7 @@
   justify-content: center;
   align-items: center;
   height: 100dvh;
-  background-color: #232323;
+  background-color: var(--black);
 }
 
 .game {
@@ -33,4 +39,15 @@
     height: calc(100% - 20px);
     width: calc(100% - 20px);
   }
+}
+
+/* Transition */
+.modal-enter-active,
+.modal-leave-active {
+  opacity: 1;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
 }

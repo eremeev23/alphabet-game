@@ -14,7 +14,7 @@ export const useTimer = () => {
     gameStarted.value = true;
     secondsInterval = setInterval(() => {
       if (currentSec.value === 0) {
-        currentSec.value = 5;
+        currentSec.value = 59;
         currentMin.value--;
       } else {
         currentSec.value--;

@@ -171,6 +171,7 @@ const addTheme = ({ theme, language }: { theme: string; language: "rus" | "eng" 
 
 .select-wrapper {
   position: relative;
+  max-width: calc(100% - 10px);
 }
 
 .select-wrapper label {
@@ -203,6 +204,7 @@ button {
   padding: 0.6rem 1.5rem;
   font-size: 22px;
   font-weight: 600;
+  max-width: calc(100% - 10px);
   background-color: var(--black);
   color: var(--light);
 }

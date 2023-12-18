@@ -189,6 +189,17 @@ button {
   max-width: calc(100vw - 20px);
 }
 
+@media screen and (max-width: 640px) {
+  .alphabet-wrapper {
+    gap: .8rem;
+  }
+
+  button {
+    width: 90px;
+  }
+}
+
+
 input {
   display: none;
 }

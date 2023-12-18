@@ -230,7 +230,7 @@ button:hover {
   label:hover,
   button:hover {
     background-color: transparent;
-    color: var(--black);
+    color: var(--black) !important;
   }
 }
 

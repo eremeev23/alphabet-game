@@ -188,7 +188,6 @@ select {
   padding: 0.7rem 0.5rem 0.6rem;
   font-weight: 500;
   font-size: 18px;
-  color: var(--black) !important;
   background-color: var(--light);
 }
 

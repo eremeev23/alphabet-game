@@ -1,0 +1,14 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --black: #232323;
+  --light: #faf4ec;
+  --blue: #6495ed;
+  --white: #f1f1f1;
+  --red: #cd5c5c;
+}
+
+$black: var(--black);
+$light: var(--light);
+$blue: var(--blue);
+$white: var(--white);
+$red: var(--red);

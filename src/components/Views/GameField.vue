@@ -1,47 +1,51 @@
 <script setup lang="ts">
+// Libraries
 import { ref, computed, onMounted, nextTick, watch } from "vue";
-import { useTimer } from "../composables/use-timer.ts";
+// Constants
+import { engAlphabet, rusAlphabet } from "@/constants/alphabets";
+// Types
+import { LangValue } from "@/types/global";
+// Composables
+import { useTimer } from "@/composables/use-timer";
+import IconPause from "@/components/Icons/IconPause.vue";
+import IconPlay from "@/components/Icons/IconPlay.vue";
+import IconReset from "@/components/Icons/IconReset.vue";
+import IconBack from "@/components/Icons/IconBack.vue";
 
-const props = defineProps<{
-  lang: "rus" | "eng";
+interface Props {
+  lang: LangValue;
   theme: string;
   time: string;
-}>();
+}
 
-const emits = defineEmits<{
+interface Emits {
   (e: "end"): void;
-}>();
+}
+
+const props = defineProps<Props>();
+const emits = defineEmits<Emits>();
 
 const { seconds, minutes, gameFinished, startTimer, pauseHandler, resetGame } = useTimer();
-const reset = ref<boolean>(true);
-const pause = ref<boolean>(false);
-const showModal = ref<boolean>(false);
 
-const alphabet = computed(() =>
-  props.lang === "rus" ? "абвгдежзиклмнопрстуфхцчшщэюя".split("") : "abcdefghijklmnopqrstuvwxyz".split("")
-);
+// Labels
+const alphabet = computed(() => (props.lang === "rus" ? rusAlphabet : engAlphabet));
 const backButtonText = computed(() => (props.lang === "rus" ? "Назад" : "Back"));
 const resetButtonText = computed(() => (props.lang === "rus" ? "Сбросить" : "Reset"));
 const gameOverText = computed(() => (props.lang === "rus" ? "Время вышло" : "Time is over"));
 const startNewGameButtonText = computed(() => (props.lang === "rus" ? "Начать новую игру" : "Start new game"));
 const seeResultButtonText = computed(() => (props.lang === "rus" ? "Посмотреть результат" : "See the result"));
+const pauseButtonText = computed(() => {
+  if (props.lang === "rus") {
+    return pause.value ? "Продолжить" : "Пауза";
+  } else {
+    return pause.value ? "Resume" : "Pause";
+  }
+});
 
-const startGame = () => {
-  reset.value = false;
-  setTimeout(() => (reset.value = true), 0);
-};
-
-const onPause = () => {
-  pause.value = !pause.value;
-  pauseHandler(pause.value);
-};
-
-const onReset = () => {
-  pause.value = true;
-  gameFinished.value = false
-  resetGame(props.time);
-  startGame();
-};
+// Layout
+const reset = ref<boolean>(true);
+const pause = ref<boolean>(false);
+const showModal = ref<boolean>(false);
 
 watch(
   () => gameFinished.value,
@@ -50,6 +54,25 @@ watch(
   }
 );
 
+// Methods
+function startGame() {
+  reset.value = false;
+  setTimeout(() => (reset.value = true), 0);
+}
+
+function onPause() {
+  pause.value = !pause.value;
+  pauseHandler(pause.value);
+}
+
+function onReset() {
+  pause.value = true;
+  gameFinished.value = false;
+  resetGame(props.time);
+  startGame();
+}
+
+// Cycling
 onMounted(async () => {
   await nextTick(() => startTimer(props.time));
 });
@@ -60,54 +83,19 @@ onMounted(async () => {
     <div class="buttons-wrapper">
       <!--  Back button  -->
       <button @click="emits('end')" :title="backButtonText">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          <path
-            d="M12 19L5 12L12 5"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
+        <IconBack />
       </button>
       <!--  Pause button  -->
-      <button @click="onPause">
-        <svg v-if="!pause" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M10 4H6V20H10V4Z"
-            fill="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-          <path
-            d="M18 4H14V20H18V4Z"
-            fill="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
-        <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M5 3L19 12L5 21V3Z"
-            fill="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
+      <button @click="onPause" :title="pauseButtonText">
+        <IconPause v-if="!pause" />
+        <IconPlay v-else />
       </button>
       <!--  Reset button  -->
       <button @click="onReset" :title="resetButtonText">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          <path
-            d="M3.51 14.9999C4.15839 16.8403 5.38734 18.4201 7.01166 19.5013C8.63598 20.5825 10.5677 21.1065 12.5157 20.9944C14.4637 20.8823 16.3226 20.1401 17.8121 18.8797C19.3017 17.6193 20.3413 15.9089 20.7742 14.0063C21.2072 12.1037 21.0101 10.1119 20.2126 8.33105C19.4152 6.55019 18.0605 5.07674 16.3528 4.13271C14.6451 3.18868 12.6769 2.82521 10.7447 3.09707C8.81245 3.36892 7.02091 4.26137 5.64 5.63995L1 9.99995"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
+        <IconReset />
       </button>
     </div>
+    <!--  Main field -->
     <p>{{ minutes }}:{{ seconds }}</p>
     <h1>
       {{ theme }}
@@ -120,6 +108,7 @@ onMounted(async () => {
         </label>
       </div>
     </div>
+    <!--  Game over modal  -->
     <Transition name="modal">
       <div v-if="gameFinished && showModal" class="modal-wrapper">
         <div class="finish-modal">
@@ -191,14 +180,13 @@ button {
 
 @media screen and (max-width: 640px) {
   .alphabet-wrapper {
-    gap: .8rem;
+    gap: 0.8rem;
   }
 
   button {
     width: 90px;
   }
 }
-
 
 input {
   display: none;

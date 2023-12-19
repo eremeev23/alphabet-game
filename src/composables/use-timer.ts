@@ -6,7 +6,7 @@ export const useTimer = () => {
   const gameStarted = ref<boolean>(false);
   const gameFinished = ref<boolean>(false);
 
-  let secondsInterval: number;
+  let secondsInterval: NodeJS.Timeout;
 
   const startTimer = (mins: string) => {
     currentMin.value = Number(mins);

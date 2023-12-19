@@ -109,7 +109,7 @@ function removeOption(option: any) {
   <div class="relative w-full">
     <!--  Select  -->
     <label
-      class="absolute top-0 left-2 -translate-y-1/2 px-0.5 bg-inherit text-xs font-semibold"
+      class="absolute top-0 left-2 -translate-y-1/2 px-0.5 bg-inherit text-[12px] font-semibold"
       :for="selectId.toString()">
       {{ label }}
     </label>

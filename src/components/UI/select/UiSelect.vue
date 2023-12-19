@@ -95,6 +95,7 @@ function isOptionSelected(option: any) {
 /* Remove one option from options list and returning this new list */
 function removeOption(option: any) {
   if (props.valueBy) {
+    // @ts-ignore
     const filteredArray = props.options.filter(opt => opt.valueBy !== option.valueBy);
     emits("remove-option", filteredArray);
   } else {
